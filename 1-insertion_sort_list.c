@@ -1,46 +1,54 @@
 #include "sort.h"
 /**
- * insertion_sort_list - Sorts an doubly linked list
- * of integers in ascending order using
- * the Insertion sort algorithm.
- * @list: The doubly linked list to sort
- * Return: Nothing!
+ * swap - swap 2 element in an list
+ * @head: head of list
+ * @a: node
+ * @b: node
+ */
+
+void swap(listint_t *a, listint_t *b, listint_t **head)
+{
+listint_t *aux1 = NULL, *aux2 = NULL;
+if (a == NULL || b == NULL)
+return;
+aux1 = a->prev;
+aux2 = b->next;
+/* if nodes are adjacent*/
+if (aux1)
+aux1->next = b;
+if (aux2)
+aux2->prev = a;
+a->next = aux2;
+a->prev = b;
+b->next = a;
+b->prev = aux1;
+if (aux1 == NULL)
+*head = b;
+}
+
+/**
+ * insertion_sort_list  - insertion_sort_list
+ * @list: doubly liked list
  */
 void insertion_sort_list(listint_t **list)
 {
-bool flag = false;
-listint_t *tmp = NULL, *aux = NULL;
-if (!list || !(*list) || !(*list)->next)
+listint_t *head, *prev;
+int value;
+if (list == NULL || (*list)->next == NULL || (*list) == NULL)
+{
 return;
-tmp = *list;
-while (tmp->next)
+}
+head = *list;
+while (head)
 {
-if (tmp->n > tmp->next->n)
+prev = head->prev;
+value = head->n;
+while (prev && prev->n > value)
 {
-tmp->next->prev = tmp->prev;
-if (tmp->next->prev)
-tmp->prev->next = tmp->next;
-else
-*list = tmp->next;
-tmp->prev = tmp->next;
-tmp->next = tmp->next->next;
-tmp->prev->next = tmp;
-if (tmp->next)
-next->prev = tmp;
-tmp = tmp->prev;
+swap(prev, head, list);
 print_list(*list);
-if (tmp->prev && tmp->prev->n > tmp->n)
-{
-if (!flag)
-aux = tmp->next;
-flag = true;
-tmp = tmp->prev;
-continue;
+rev = head->prev;
 }
-}
-if (!flag)
-tmp = tmp->next;
-else
-tmp = aux, flag = false;
+head = head->next;
 }
 }
