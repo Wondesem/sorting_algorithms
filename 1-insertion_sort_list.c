@@ -47,7 +47,7 @@ while (prev && prev->n > value)
 {
 swap(prev, head, list);
 print_list(*list);
-rev = head->prev;
+prev = head->prev;
 }
 head = head->next;
 }
